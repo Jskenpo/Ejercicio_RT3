@@ -21,22 +21,23 @@ blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
 rojo = Material(diffuse=(255,0,0), spec = 10, ks = 0.02) 
 azul = Material(diffuse=(0,0,255), spec = 10, ks = 0.02)
 verde = Material(diffuse=(0,255,0), spec = 10, ks = 0.02)
-oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2, matType=OPAQUE)
 celeste = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
 espejo = Material(diffuse=(200,200, 200), spec =64, ks = 0.02, matType=REFLECTIVE)
 cielo = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
 cesped = Material(diffuse=(100,225,100), spec = 46, ks = 0.05)
+black = Material(diffuse=(0,0,0), spec = 46, ks = 0.05, matType=OPAQUE)
+amarillo = Material(diffuse=(255,255,0), spec = 46, ks = 0.05, matType=OPAQUE)
+
 
 objetos = [
   Plane(position=(0,-2,0), normal=(0,1,-0.02), material=blanco), 
-  Plane(position=(0,5,0), normal=(0,1,0.2), material=oro),
+  Plane(position=(0,5,0), normal=(0,1,0.2), material=amarillo),
   Plane(position=(4,0,0), normal=(1,0,0.2), material=azul), 
   Plane(position=(-4,0,0), normal=(1,0,-0.2), material=rojo),
   Plane(position=(0,2,0), normal=(0,-1,0), material=verde),
-  Plane(position=(0,-2,5), normal=(0,0,-1), material=celeste),
-  Disk(position=(0.5,0.5,-5), normal=(-0.5,0.5,-5), radius=0.5, material=espejo), 
-  AABB(position=(1,0.5,-2), size=(1,1,1), material=cielo),
-  AABB(position=(-1,0,-3), size=(1,1,1), material=cesped)
+  Disk(position=(0.2,0.05,-5), normal=(0,0.05,3), radius=0.5, material=espejo),
+  AABB(position=(-1,-1,-3), size=(0.5,0.5,0.5), material=amarillo),
+  AABB(position=(1,-1,-3), size=(0.5,0.5,0.5), material=black),
 ]
 
 luces = [
