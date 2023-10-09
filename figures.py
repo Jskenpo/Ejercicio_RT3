@@ -1,4 +1,4 @@
-import Lib.notnumpy as nnp
+import Mathematics as mate
 from math import tan, pi, atan2, acos
 
 
@@ -26,9 +26,9 @@ class Sphere(Shape):
         super().__init__(position, material)
 
     def ray_intersect(self, orig, direction):
-        l = nnp.sub(self.position, orig)
-        lengthL = nnp.norm(l)
-        tca = nnp.dot_product(l, direction)
+        l = mate.sub(self.position, orig)
+        lengthL = mate.norm(l)
+        tca = mate.dot_product(l, direction)
 
         d = (lengthL ** 2 - tca ** 2) ** 0.5
         if d > self.radius:
@@ -43,9 +43,9 @@ class Sphere(Shape):
         if t0 < 0:
             return None
 
-        p = nnp.add(orig, nnp.multiply(t0, direction))
-        normal = nnp.sub(p, self.position)
-        normal = nnp.divTF(normal, nnp.norm(normal))
+        p = mate.add(orig, mate.multiply(t0, direction))
+        normal = mate.sub(p, self.position)
+        normal = mate.divTF(normal, mate.norm(normal))
 
         u = atan2(normal[2], normal[0]) / (2 * pi) + 0.5
         v = acos(normal[1]) / pi
@@ -59,22 +59,22 @@ class Sphere(Shape):
 
 class Plane(Shape):
     def __init__(self, position, normal, material):
-        self.normal = nnp.divTF(normal, nnp.norm(normal))
+        self.normal = mate.divTF(normal, mate.norm(normal))
         super().__init__(position, material)
 
     def ray_intersect(self, orig, dir):
-        denom = nnp.dot_product(dir, self.normal)
+        denom = mate.dot_product(dir, self.normal)
 
         if abs(denom) <= 0.0001:
             return None
 
-        num = nnp.dot_product(nnp.sub(self.position, orig), self.normal)
+        num = mate.dot_product(mate.sub(self.position, orig), self.normal)
         t = num / denom
 
         if t < 0:
             return None
 
-        P = nnp.add(orig, nnp.multiply(t, dir))
+        P = mate.add(orig, mate.multiply(t, dir))
 
         return Intercept(distance=t,
                          point=P,
@@ -94,9 +94,9 @@ class Disk(Plane):
         if planeIntersect is None:
             return None
 
-        contactDist = nnp.sub(planeIntersect.point, self.position)
+        contactDist = mate.sub(planeIntersect.point, self.position)
 
-        contactDist = nnp.norm(contactDist)
+        contactDist = mate.norm(contactDist)
 
         if contactDist > self.radius:
             return None
@@ -113,12 +113,12 @@ class AABB(Shape):
         self.size = size
         super().__init__(position, material)
 
-        self.planes = [Plane(nnp.add(self.position, (-size[0] / 2, 0, 0)), (-1, 0, 0), material),
-                       Plane(nnp.add(self.position, (size[0] / 2, 0, 0)), (1, 0, 0), material),
-                       Plane(nnp.add(self.position, (0, -size[1] / 2, 0)), (0, -1, 0), material),
-                       Plane(nnp.add(self.position, (0, size[1] / 2, 0)), (0, 1, 0), material),
-                       Plane(nnp.add(self.position, (0, 0, -size[2] / 2)), (0, 0, -1), material),
-                       Plane(nnp.add(self.position, (0, 0, size[2] / 2)), (0, 0, 1), material)]
+        self.planes = [Plane(mate.add(self.position, (-size[0] / 2, 0, 0)), (-1, 0, 0), material),
+                       Plane(mate.add(self.position, (size[0] / 2, 0, 0)), (1, 0, 0), material),
+                       Plane(mate.add(self.position, (0, -size[1] / 2, 0)), (0, -1, 0), material),
+                       Plane(mate.add(self.position, (0, size[1] / 2, 0)), (0, 1, 0), material),
+                       Plane(mate.add(self.position, (0, 0, -size[2] / 2)), (0, 0, -1), material),
+                       Plane(mate.add(self.position, (0, 0, size[2] / 2)), (0, 0, 1), material)]
 
         # Bounds
         self.boundsMin = [0, 0, 0]
